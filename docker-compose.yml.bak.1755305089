@@ -1,16 +1,11 @@
 services:
   redis:
-    image: redis:7.2-alpine
+    image: redis:7-alpine
     restart: unless-stopped
 
   agent-hub:
     build: ./agent-hub
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/"]
-      interval: 20s
-      timeout: 3s
-      retries: 3
     environment:
       - REDIS_URL=redis://redis:6379/0
       - OLLAMA_URL=${OLLAMA_URL:-http://172.17.0.1:11434}

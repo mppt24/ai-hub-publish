@@ -17,6 +17,7 @@ ENABLE_OPENAI = os.getenv("ENABLE_OPENAI", "false").lower() == "true"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 class ChatIn(BaseModel):
+    model_config = {"protected_namespaces": ()}
     message: str
     model_ollama: str = "llama3.1:8b"
     use_openai: bool = False

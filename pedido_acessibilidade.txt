@@ -1,0 +1,9 @@
+Quero um plano global de acessibilidade para telemóvel, TV e PC, em português europeu.
+Objetivo: tornar a utilização possível para pessoas com limitações visuais, auditivas, motoras e cognitivas.
+Entrega:
+- Sumário executivo (5 bullets).
+- Checklist rápida (15 itens) com ✔/✖.
+- Recomendações por plataforma (Mobile, TV, PC) com 5 medidas por plataforma.
+- Padrões a cumprir (WCAG 2.2 AA, EN 301 549) resumidos em 6 pontos.
+- Métricas de validação e plano de testes em 10 passos.
+Formato: markdown claro; títulos curtos; nada de floreados.

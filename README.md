@@ -36,4 +36,6 @@ Se o teste de saúde passar e o chat falhar, confirma primeiro o endereço do Ol
 
 ## Acesso ao Hub
 
-Por omissão, a API responde apenas em `127.0.0.1:8181`. Como o Hub ainda não tem autenticação própria, mantém este endereço para testes locais. Para disponibilizar o serviço a outras pessoas, configura primeiro um controlo de acesso externo adequado.
+Por omissão, o Docker publica a API em `127.0.0.1:8181`. Como o Hub ainda não tem autenticação própria, mantém este endereço para testes locais. Para disponibilizar o serviço a outras pessoas, configura primeiro um controlo de acesso externo adequado.
+
+Em versões do Docker Engine anteriores à 28.0.0, outros equipamentos no mesmo segmento de rede podem alcançar portas publicadas em localhost. Consulta a [nota do Docker sobre publicação de portas](https://docs.docker.com/engine/network/port-publishing/#setting-the-default-bind-address-for-containers).

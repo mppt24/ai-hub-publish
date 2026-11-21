@@ -8,7 +8,7 @@ Podes confirmar que o serviço arranca antes de configurar qualquer modelo. [Gui
 
 ## Testar a API localmente
 
-Precisas de Git, Docker e Docker Compose. Num terminal, descarrega o código, inicia o serviço e confirma que responde.
+Precisas de Git, Docker Engine 28 ou posterior e Docker Compose. Para esta primeira verificação, podes usar o Hub sem configurar um modelo ou fornecer chaves. Executa as linhas no terminal pela ordem apresentada. Se já tens o código, começa na primeira linha `bash`, dentro da pasta do projeto.
 
 ```bash
 git clone https://github.com/mppt24/ai-hub-publish.git
@@ -19,9 +19,9 @@ bash scripts/start.sh
 bash scripts/test_request.sh
 ```
 
-A última linha devolve um objeto JSON com `"ok": true`. Este resultado confirma que a API está a responder. Para receber uma resposta de um modelo, segue a secção [Ligar ao Ollama](#ligar-ao-ollama). Para a lista de endpoints, abre [a documentação da API local](http://127.0.0.1:8181/docs).
+A última linha deve mostrar `"ok": true`. Isso confirma que o serviço responde dentro do contentor. No computador onde corre o Docker, podes ver os pedidos que a aplicação aceita. [Abrir a documentação da API local](http://127.0.0.1:8181/docs)
 
-É possível consultar os registos com `docker compose logs agent-hub` e parar o serviço com `docker compose down`.
+Se o teste falhar, vê o estado com `docker compose ps` e as últimas mensagens com `docker compose logs --tail=30 agent-hub`. Se o teste passar mas a página não abrir, verifica se estás a usar o navegador no mesmo computador onde o Docker está a correr. Quando acabares, para o serviço com `docker compose down`.
 
 ## Ligar ao Ollama
 

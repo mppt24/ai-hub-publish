@@ -1,3 +1,5 @@
+<div lang="pt-PT">
+
 # AI Hub
 
 O AI Hub é um serviço que recebe pedidos de chat de outras aplicações. Usa Ollama para encaminhar esses pedidos para modelos locais. É um protótipo do [MPPT24OS](https://github.com/mppt24/MPPT24OS) e usa FastAPI. A integração com OpenAI é opcional e vem desativada.
@@ -54,3 +56,5 @@ O [plano de acessibilidade](plano.md) regista objetivos e ideias. Os ficheiros d
 | --- | --- |
 | [`docker-compose.yml`](docker-compose.yml) | Define o serviço do Hub e um serviço Redis |
 | [`agent-hub/main.py`](agent-hub/main.py) | Implementa a API e as integrações com os modelos |
+
+</div>

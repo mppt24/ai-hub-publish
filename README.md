@@ -15,20 +15,25 @@ Protótipo para testes locais.
 
 ## Testar a API localmente
 
-São necessários Docker, Docker Compose e `curl`. A partir da raiz do repositório, valida a configuração e inicia o Hub apenas na interface local:
+São necessários Docker e Docker Compose. Na raiz do repositório, prepara a configuração, inicia o serviço e confirma que responde:
 
 ```bash
+bash scripts/prepare_only.sh
 docker compose config --quiet
-docker compose build agent-hub
-docker compose run --rm --no-deps --publish 127.0.0.1:8181:8080 agent-hub
+bash scripts/start.sh
+bash scripts/test_request.sh
 ```
 
-Noutro terminal, verifica se o Hub responde:
+A última linha devolve um objeto JSON com `"ok": true`. O teste funciona sem Ollama e sem credenciais. Para a lista de endpoints, abre [a documentação da API local](http://127.0.0.1:8181/docs).
 
-```bash
-curl --fail --silent --show-error http://127.0.0.1:8181/
-```
+É possível consultar os registos com `docker compose logs agent-hub` e parar o serviço com `docker compose down`.
 
-A resposta inclui `"ok": true`. Este teste confirma que a API está a responder. Para utilizar `POST /chat`, usa uma instância Ollama acessível a partir do contentor, define `OLLAMA_URL` e indica um modelo instalado nessa instância. Termina o teste com **Ctrl+C** no terminal onde o Hub está a correr.
+## Ligar ao Ollama
 
-A API é um protótipo sem autenticação. O exemplo acima limita o acesso ao próprio computador.
+Para usar `POST /chat`, define em `.env` o `OLLAMA_URL` de uma instância acessível a partir do contentor, volta a executar `bash scripts/start.sh` e indica em `model_ollama` um modelo instalado nessa instância.
+
+Se o teste de saúde passar e o chat falhar, confirma primeiro o endereço do Ollama e o nome do modelo. O `127.0.0.1` visto de dentro do contentor aponta para o próprio contentor.
+
+## Acesso ao Hub
+
+Por omissão, a API responde apenas em `127.0.0.1:8181`. Como o Hub ainda não tem autenticação própria, mantém este endereço para testes locais. Para disponibilizar o serviço a outras pessoas, configura primeiro um controlo de acesso externo adequado.

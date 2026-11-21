@@ -1,0 +1,36 @@
+name: Verificar o AI Hub em Docker
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Preparar e validar a configuração
+        run: |
+          bash scripts/prepare_only.sh
+          docker compose config --quiet
+      - name: Construir e iniciar
+        run: bash scripts/start.sh
+      - name: Verificar saúde e acesso local
+        run: |
+          bash scripts/test_request.sh
+          test "$(docker compose port agent-hub 8080)" = "127.0.0.1:8181"
+          curl --fail --silent --show-error --max-time 5 http://127.0.0.1:8181/ |
+            python3 -c 'import json, sys; sys.exit(0 if json.load(sys.stdin).get("ok") is True else 1)'
+      - name: Mostrar registos em caso de falha
+        if: failure()
+        run: docker compose logs --no-color
+      - name: Parar os contentores
+        if: always()
+        run: docker compose down

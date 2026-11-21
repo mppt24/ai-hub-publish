@@ -2,12 +2,15 @@
 set -euo pipefail
 BASE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$BASE"
-set -a; [[ -f .env ]] && . ./.env; set +a
+docker compose exec -T agent-hub python - <<'PY'
+import json
+from urllib.request import urlopen
 
-echo "GET /"
-curl -s "http://localhost:${HUB_PORT:-8181}/" || true
-echo -e "\nPOST /chat"
-curl -s "http://localhost:${HUB_PORT:-8181}/chat" \
-  -H 'content-type: application/json' \
-  -d '{"message":"Plano global de acessibilidade para telemóvel/TV/PC."}' || true
-echo
+with urlopen("http://127.0.0.1:8080/", timeout=5) as response:
+    status = json.load(response)
+
+if status.get("ok") is not True:
+    raise SystemExit("O AI Hub respondeu, mas não confirmou o estado de saúde.")
+
+print(json.dumps(status, ensure_ascii=False))
+PY

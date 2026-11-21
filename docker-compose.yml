@@ -7,13 +7,17 @@ services:
     build: ./agent-hub
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/"]
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/', timeout=2).close()"
       interval: 20s
       timeout: 3s
       retries: 3
     environment:
       - REDIS_URL=redis://redis:6379/0
-      - OLLAMA_URL=${OLLAMA_URL:-http://172.17.0.1:11434}
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ENABLE_OPENAI=${ENABLE_OPENAI:-false}
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
@@ -22,4 +26,4 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "${HUB_PORT:-8181}:8080"
+      - "${HUB_BIND_ADDRESS:-127.0.0.1}:${HUB_PORT:-8181}:8080"

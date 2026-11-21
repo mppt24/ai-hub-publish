@@ -1,3 +1,5 @@
+> **Estado deste documento** · Plano de trabalho. Usa a lista para identificar pontos a testar. Para conhecer a versão em avaliação e o teste disponível, consulta o [README do AI Hub](README.md#estado--em-avaliação).
+
 **Plano Global de Acessibilidade**
 
 **Sumário Executivo**

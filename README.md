@@ -8,15 +8,24 @@ Podes confirmar que o serviço arranca antes de configurar qualquer modelo. [Gui
 
 ## Testar a API localmente
 
-Precisas de Git, Docker Engine 28 ou posterior e Docker Compose. Para esta primeira verificação, podes usar o Hub sem configurar um modelo ou fornecer chaves. Executa as linhas no terminal pela ordem apresentada. Se já tens o código, começa na primeira linha `bash`, dentro da pasta do projeto.
+Precisas de Git, Docker Engine 28 ou posterior e Docker Compose. Para esta primeira verificação, podes usar o Hub sem configurar um modelo ou fornecer chaves. Começa por obter uma cópia do código. Se já tens o repositório, abre essa pasta e passa ao segundo bloco.
 
 ```bash
-git clone https://github.com/mppt24/ai-hub-publish.git
-cd ai-hub-publish
+git clone https://github.com/mppt24/ai-hub-publish.git && cd ai-hub-publish
+```
+
+Dentro da pasta, prepara a configuração.
+
+```bash
 bash scripts/prepare_only.sh
-docker compose config --quiet
-bash scripts/start.sh
-bash scripts/test_request.sh
+```
+
+Se a pasta já tinha um ficheiro `.env`, o script mantém esse ficheiro. Para o teste local, confirma `HUB_BIND_ADDRESS=127.0.0.1` e `HUB_PORT=8181` antes de arrancar. Depois corre a verificação e o arranque. Cada passo depende do anterior.
+
+```bash
+docker compose config --quiet &&
+  bash scripts/start.sh &&
+  bash scripts/test_request.sh
 ```
 
 A última linha deve mostrar `"ok": true`. Isso confirma que o serviço responde dentro do contentor. No computador onde corre o Docker, podes ver os pedidos que a aplicação aceita. [Abrir a documentação da API local](http://127.0.0.1:8181/docs)
@@ -34,6 +43,10 @@ Se o teste de saúde passar e o chat falhar, confirma primeiro o endereço do Ol
 Por omissão, o Docker publica a API em `127.0.0.1:8181`. Como o Hub ainda não tem autenticação própria, mantém este endereço para testes locais. Para disponibilizar o serviço a outras pessoas, configura primeiro um controlo de acesso externo adequado.
 
 Em versões do Docker Engine anteriores à 28.0.0, outros equipamentos no mesmo segmento de rede podem alcançar portas publicadas em localhost. Consulta a [nota do Docker sobre publicação de portas](https://docs.docker.com/engine/network/port-publishing/#setting-the-default-bind-address-for-containers).
+
+## Apontamentos de desenvolvimento
+
+O [plano de acessibilidade](plano.md) regista objetivos e ideias. Os ficheiros de pedidos e respostas na raiz são material de trabalho. O percurso de utilização verificado está em [Testar a API localmente](#testar-a-api-localmente).
 
 ## Estrutura
 

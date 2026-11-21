@@ -24,7 +24,7 @@ Segue [Testar a API localmente](README.md#testar-a-api-localmente).
 OK · API local · Serviço a responder
 ```
 
-Lê pela ordem **resultado**, **etapa** e **detalhe**. Para investigar uma falha, confirma primeiro a data e a versão, depois abre o primeiro passo que falhou.
+Neste exemplo, «Serviço a responder» significa que o teste conseguiu falar com a API. Se o chat falhar depois, consulta os registos do Hub e confirma a configuração do modelo. [Ver a verificação em Docker no GitHub](https://github.com/mppt24/ai-hub-publish/actions/runs/44919982694)
 
 ## Cuidados
 
